@@ -1,7 +1,8 @@
 version: '3'
 services:
-  msxenv:
+  msxdev:
     build: .
+    image: devmsx:no-openmsx
     ports: 
       - 5901:5901
     environment:
@@ -19,9 +20,9 @@ services:
       - type: bind
         source: ./dot_config/pcmanfm
         target: /home/msx/.config/pcmanfm
-      - type: bind
-        source: ./dot_vscode
-        target: /home/msx/.vscode
+#      - type: bind
+#        source: ./dot_vscode
+#        target: /home/msx/.vscode
       - type: bind
         source: /Users/shinsuke/work/msx
         target: /mnt/msx
