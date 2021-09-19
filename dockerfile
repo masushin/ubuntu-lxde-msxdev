@@ -77,7 +77,7 @@ RUN apt install -y \
 RUN git clone https://github.com/mamedev/mame.git
 WORKDIR mame
 RUN git checkout ec9ba6f
-RUN make SUBTARGET=hbf1 SOURCES=src/mame/drivers/msx.cpp
+RUN make -j 2 SUBTARGET=hbf1 SOURCES=src/mame/drivers/msx.cpp
 
 # Locale
 RUN cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
