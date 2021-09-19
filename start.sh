@@ -11,6 +11,8 @@ mkdir ${HOME}/.vnc \
     && chmod 600 ${HOME}/.vnc/passwd
 touch ${HOME}/.Xresources
 
+sudo chown -R ${USER}:developer ${HOME}/.vscode
+
 echo "#############################"
 
 # Run VNC server with tail in the foreground

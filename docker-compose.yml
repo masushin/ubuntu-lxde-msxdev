@@ -11,14 +11,17 @@ services:
         source: ~/.config/pulse
         target: /home/msx/.config/pulse
       - type: bind
-        source: ./config/clipit
+        source: ./dot_config/clipit
         target: /home/msx/.config/clipit
       - type: bind
-        source: ./config/lxterminal
+        source: ./dot_config/lxterminal
         target: /home/msx/.config/lxterminal
       - type: bind
-        source: ./config/pcmanfm
+        source: ./dot_config/pcmanfm
         target: /home/msx/.config/pcmanfm
+      - type: bind
+        source: ./dot_vscode
+        target: /home/msx/.vscode
       - type: bind
         source: /Users/shinsuke/work/msx
         target: /mnt/msx

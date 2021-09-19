@@ -2,9 +2,7 @@ FROM ubuntu
 
 RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y lxde
 
-RUN apt install -y \
-    ibus \
-    ibus-mozc \
+RUN apt install -y fcitx-mozc \
     language-pack-ja-base \
     language-pack-ja \
     fonts-ipafont-gothic \
@@ -53,6 +51,7 @@ RUN chmod +x /opt/start.sh
 USER ${USER}
 WORKDIR /home/${USER}
 RUN mkdir ~/.config && sudo chown ${USER}:developer ~/.config
+RUN echo 'alias code="code --no-sandbox"' >> ~/.bash_aliases
 
 # Command
 CMD ["/opt/start.sh"]
