@@ -1,0 +1,24 @@
+version: '3'
+services:
+  msxenv:
+    build: .
+    ports: 
+      - 5901:5901
+    environment:
+      - PULSE_SERVER=docker.for.mac.localhost
+    volumes:
+      - type: bind
+        source: ~/.config/pulse
+        target: /home/msx/.config/pulse
+      - type: bind
+        source: ./config/clipit
+        target: /home/msx/.config/clipit
+      - type: bind
+        source: ./config/lxterminal
+        target: /home/msx/.config/lxterminal
+      - type: bind
+        source: ./config/pcmanfm
+        target: /home/msx/.config/pcmanfm
+      - type: bind
+        source: /Users/shinsuke/work/msx
+        target: /mnt/msx
