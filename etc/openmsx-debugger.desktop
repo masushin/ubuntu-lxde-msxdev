@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=openMSX Debugger
+GenericName=openMSX Debugger
+Comment=openMSX Debugger
+TryExec=/opt/debugger/derived/bin/openmsx-debugger
+Exec=/opt/debugger/derived/bin/openmsx-debugger
+Type=Application
+Icon=terminal
+Categories=Development;Tool;Programming;
+Keywords=console;command line;execute;

@@ -8,15 +8,15 @@ RUN apt install -y fcitx-mozc \
     fonts-ipafont-gothic \
     fonts-ipafont-mincho
 
+RUN apt install -y tigervnc-standalone-server tigervnc-xorg-extension
+
 RUN apt install -y \
     sudo \
-    tightvncserver \
     pulseaudio \
     alsa-utils \
     curl \
     wget \
-    git \
-    autocutsel
+    git
 
 RUN apt install -y \
     build-essential \
@@ -77,7 +77,23 @@ RUN apt install -y \
 RUN git clone https://github.com/mamedev/mame.git
 WORKDIR mame
 RUN git checkout ec9ba6f
-RUN make -j 2 SUBTARGET=hbf1 SOURCES=src/mame/drivers/msx.cpp
+COPY cbios.patch /opt/mame
+RUN patch -p1 < ./cbios.patch
+RUN make -j 2 SUBTARGET=cbios SOURCES=src/mame/drivers/msx.cpp
+RUN mkdir roms/cbios && cp /opt/openMSX/derived/x86_64-linux-opt-3rd/bindist/install/share/machines/*.rom /opt/mame/roms/cbios
+
+
+# nMSXtiles
+WORKDIR /opt
+RUN git clone https://github.com/pipagerardo/nMSXtiles.git
+WORKDIR nMSXtiles/src
+RUN qmake && make
+
+# multipaint
+WORKDIR /opt
+RUN sudo apt install -y default-jre
+RUN wget http://multipaint.kameli.net/multipaint.zip
+RUN unzip multipaint.zip
 
 # Locale
 RUN cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
@@ -101,8 +117,15 @@ RUN echo 'Defaults visiblepw'             >> /etc/sudoers
 RUN echo $USER 'ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Start script
-COPY start.sh /opt/
-RUN chmod +x /opt/start.sh
+COPY start.sh /tmp/
+RUN chmod +x /tmp/start.sh
+
+COPY etc/multipaint.desktop /usr/share/applications
+COPY etc/openmsx.desktop /usr/share/applications
+COPY etc/openmsx-debugger.desktop /usr/share/applications
+COPY etc/code.desktop /usr/share/applications
+COPY etc/nMSXtiles.desktop /usr/share/applications
+
 
 USER ${USER}
 WORKDIR /home/${USER}
@@ -117,6 +140,9 @@ RUN echo 'export ZCCCFG=${Z88DK_HOME}/lib/config' >> ~/.bashrc
 RUN echo 'export PATH=${Z88DK_HOME}/bin:${PATH}' >> ~/.bashrc
 RUN echo 'export PATH=/opt/openMSX/derived/x86_64-linux-opt-3rd/bindist/install/bin:${PATH}' >> ~/.bashrc
 RUN echo 'export PATH=/opt/debugger/derived/bin:${PATH}' >> ~/.bashrc
+RUN echo 'export PATH=/opt/mame:${PATH}' >> ~/.bashrc
+RUN echo 'export PATH=/opt/nMSXtiles/build:${PATH}' >> ~/.bashrc
+RUN echo 'export PATH=/opt/multipaint/application.linux64:${PATH}' >> ~/.bashrc
 
 # Command
-CMD ["/opt/start.sh"]
+CMD ["/tmp/start.sh"]

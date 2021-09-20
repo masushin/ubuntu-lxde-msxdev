@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=openMSX
+GenericName=openMSX
+Comment=MSX emulator
+TryExec=/opt/openMSX/derived/x86_64-linux-opt-3rd/bindist/install/bin/openmsx
+Exec=/opt/openMSX/derived/x86_64-linux-opt-3rd/bindist/install/bin/openmsx
+Type=Application
+Icon=terminal
+Categories=Development;Tool;Programming;Game;
+Keywords=console;command line;execute;

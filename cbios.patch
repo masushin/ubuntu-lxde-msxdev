@@ -1,0 +1,66 @@
+diff --git a/src/mame/drivers/msx.cpp b/src/mame/drivers/msx.cpp
+index b614fefdbef..e0eefc89700 100644
+--- a/src/mame/drivers/msx.cpp
++++ b/src/mame/drivers/msx.cpp
+@@ -6616,6 +6616,29 @@ void msx2_state::hotbit20(machine_config &config)
+ 	msx2_cartlist(config);
+ }
+ 
++
++/* MSX2 - Compat C-BIOS */
++
++ROM_START (cbios)
++	ROM_REGION (0x20000, "maincpu",0)
++	ROM_LOAD ("cbios_main_msx2_jp.rom",   0x0000, 0x8000, CRC(0c2d6b99) SHA1(47cc280f0d8b0611fdb1069e6fd7b854cae93546))
++	ROM_LOAD ("cbios_logo_msx2.rom",      0x8000, 0x4000, CRC(41b12c7b) SHA1(d4e5b98ce23573669fb44447582d656e390791c0))
++	ROM_LOAD ("cbios_sub.rom",            0xc000, 0x4000, CRC(5466ccb6) SHA1(2fcb40413e7d373f0f2dbdc815ce18746ddf3684))
++ROM_END
++
++void msx2_state::cbios(machine_config &config)
++{
++	msx2(config);
++
++	add_internal_slot(config, MSX_SLOT_ROM, "bios", 0, 0, 0, 3, "maincpu", 0x0000);
++	add_cartridge_slot<1>(config, MSX_SLOT_CARTRIDGE, "cartslot1", 1, 0, msx_cart, nullptr);
++	add_cartridge_slot<2>(config, MSX_SLOT_CARTRIDGE, "cartslot2", 2, 0, msx_cart, nullptr);
++	add_internal_slot(config, MSX_SLOT_ROM, "sub", 3, 0, 0, 1, "maincpu", 0xc000);
++	add_internal_slot(config, MSX_SLOT_RAM, "ram", 3, 2, 0, 64);  /* 512KB RAM */
++
++	msx2_cartlist(config);
++}
++
+ /* MSX2 - Sony HB-F1 */
+ 
+ ROM_START (hbf1)
+@@ -8829,6 +8852,7 @@ COMP(198?, mpc27,      0,        0,     mpc27,      msx2jp,   msx2_state, empty_
+ COMP(1988, phc23,      0,        0,     phc23,      msx2jp,   msx2_state, empty_init, "Sanyo", "Wavy PHC-23 (Japan) (MSX2)", 0)
+ COMP(198?, phc55fd2,   0,        0,     phc55fd2,   msx2jp,   msx2_state, empty_init, "Sanyo", "Wavy PHC-55FD2 (MSX2)", 0)
+ COMP(198?, phc77,      0,        0,     phc77,      msx2jp,   msx2_state, empty_init, "Sanyo", "Wavy PHC-77 (MSX2)", MACHINE_NOT_WORKING) // Firmware not emulated
++COMP(2018, cbios,      0,        0,     cbios,      msx2jp,   msx2_state, empty_init, "CBIOS", "CBIOS ..", 0 )
+ COMP(1986, hbf1,       0,        0,     hbf1,       msx2jp,   msx2_state, empty_init, "Sony", "HB-F1 (Japan) (MSX2)", MACHINE_NOT_WORKING ) // Screen stays a single color after a while
+ COMP(1987, hbf12,      0,        0,     hbf12,      msx2jp,   msx2_state, empty_init, "Sony", "HB-F1II (Japan) (MSX2)", MACHINE_NOT_WORKING ) // Screen stays a single color after a while
+ COMP(1987, hbf1xd,     0,        0,     hbf1xd,     msx2jp,   msx2_state, empty_init, "Sony", "HB-F1XD (Japan) (MSX2)", 0)
+diff --git a/src/mame/includes/msx.h b/src/mame/includes/msx.h
+index f381e76982d..44b2e5e2e48 100644
+--- a/src/mame/includes/msx.h
++++ b/src/mame/includes/msx.h
+@@ -417,6 +417,7 @@ public:
+ 	void phc55fd2(machine_config &config);
+ 	void phc77(machine_config &config);
+ 	void hotbit20(machine_config &config);
++	void cbios(machine_config &config);
+ 	void hbf1(machine_config &config);
+ 	void hbf12(machine_config &config);
+ 	void hbf1xd(machine_config &config);
+diff --git a/src/mame/mame.lst b/src/mame/mame.lst
+index 071483a00f2..c6e294188a2 100644
+--- a/src/mame/mame.lst
++++ b/src/mame/mame.lst
+@@ -30863,6 +30863,7 @@ hb55p                           // 1983 MSX
+ hb701fd                         //
+ hb75d                           // 1983 MSX Germany
+ hb75p                           // 1983 MSX
++cbios                           // 2018 CBIOS
+ hbf1                            // 1986 MSX2 Japan
+ hbf12                           // 1987 MSX2 Japan
+ hbf1xd                          // 1987 MSX2 Japan

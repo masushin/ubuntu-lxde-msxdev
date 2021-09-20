@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=multipaint
+GenericName=multipaint
+Comment=Retro Graphics Draw Tool
+TryExec=/opt/multipaint/application.linux64/multipaint
+Exec=/opt/multipaint/application.linux64/multipaint
+Type=Application
+Icon=terminal
+Categories=Development;Tool;Drawing;Programming;
+Keywords=console;command line;execute;

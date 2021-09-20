@@ -2,7 +2,7 @@ version: '3'
 services:
   msxdev:
     build: .
-    image: devmsx:no-openmsx
+    image: devmsx
     ports: 
       - 5901:5901
     environment:
@@ -18,11 +18,11 @@ services:
         source: ./dot_config/lxterminal
         target: /home/msx/.config/lxterminal
       - type: bind
+        source: ./dot_config/lxpanel
+        target: /home/msx/.config/lxpanel
+      - type: bind
         source: ./dot_config/pcmanfm
         target: /home/msx/.config/pcmanfm
-#      - type: bind
-#        source: ./dot_vscode
-#        target: /home/msx/.vscode
       - type: bind
         source: /Users/shinsuke/work/msx
         target: /mnt/msx

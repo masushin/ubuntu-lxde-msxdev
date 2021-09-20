@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=nMSXtiles
+GenericName=nMSXtiles
+Comment=MSX Pattern/Tile Editor
+TryExec=/opt/nMSXtiles/build/nMSXtiles
+Exec=/opt/nMSXtiles/build/nMSXtiles
+Type=Application
+Icon=terminal
+Categories=Development;Tool;Drawing;Programming;
+Keywords=console;command line;execute;
