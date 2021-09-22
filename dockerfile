@@ -121,14 +121,11 @@ COPY etc/openmsx-debugger.desktop /usr/share/applications
 COPY etc/code.desktop /usr/share/applications
 COPY etc/nMSXtiles.desktop /usr/share/applications
 
-
 USER ${USER}
 WORKDIR /home/${USER}
-RUN mkdir ~/.config && sudo chown ${USER}:developer ~/.config && \
-    mkdir ~/.openMSX && \
-    cp -Rfp /opt/openMSX/derived/x86_64-linux-opt-3rd/bindist/install/share/ ~/.openMSX && \
-    sudo chown -R ${USER}:developer ~/.openMSX && \
-    mkdir ~/.mame
+ADD --chown=${USER}:developer config/ /home/${USER}/
+RUN cp -Rfp /opt/openMSX/derived/x86_64-linux-opt-3rd/bindist/install/share/ ~/.openMSX && \
+    cd ~/.openMSX && patch -p1 < ./openmsx-defaultmachine-setting.patch
 
 RUN echo 'alias code="code --no-sandbox"' >> ~/.bash_aliases && \
     echo 'export Z88DK_HOME=/opt/z88dk' >> ~/.bashrc && \

@@ -1,0 +1,20 @@
+diff --git a/share/settings.xml b/share/settings.xml
+index 8f41287c6..21c783583 100644
+--- a/share/settings.xml
++++ b/share/settings.xml
+@@ -1,8 +1,11 @@
+ <?xml version="1.0"?>
+ <!DOCTYPE settings SYSTEM 'settings.dtd'>
+ <settings>
+-	<!--
+-	You can edit this file to provide your users with initial settings
+-	that are different from the openMSX defaults.
+-	-->
++  <settings>
++    <setting id="di_halt_callback">dihaltcallback</setting>
++    <setting id="invalid_ppi_mode_callback">ppimodecallback</setting>
++    <setting id="invalid_psg_directions_callback">psgdirectioncallback</setting>
++    <setting id="default_machine">C-BIOS_MSX2_JP</setting>
++  </settings>
++  <bindings/>
+ </settings>
