@@ -11,9 +11,9 @@ services:
       - type: bind
         source: ~/.config/pulse
         target: /home/msx/.config/pulse
-      - type: bind
-        source: ./dot_config/clipit
-        target: /home/msx/.config/clipit
+#      - type: bind
+#        source: ./dot_config/clipit
+#        target: /home/msx/.config/clipit
       - type: bind
         source: ./dot_config/lxterminal
         target: /home/msx/.config/lxterminal
@@ -24,5 +24,8 @@ services:
         source: ./dot_config/pcmanfm
         target: /home/msx/.config/pcmanfm
       - type: bind
+        source: ./dot_mame
+        target: /home/msx/.mame
+      - type: bind
         source: /Users/shinsuke/work/msx
-        target: /mnt/msx
+        target: /home/msx/devmsx

@@ -73,7 +73,7 @@ RUN cd debugger && \
 
 # MAME
 RUN git clone https://github.com/mamedev/mame.git
-COPY cbios.patch /opt/mame
+COPY etc/cbios.patch /opt/mame
 RUN cd mame && \
     git checkout ec9ba6f && \
     patch -p1 < ./cbios.patch && \
@@ -127,7 +127,8 @@ WORKDIR /home/${USER}
 RUN mkdir ~/.config && sudo chown ${USER}:developer ~/.config && \
     mkdir ~/.openMSX && \
     cp -Rfp /opt/openMSX/derived/x86_64-linux-opt-3rd/bindist/install/share/ ~/.openMSX && \
-    sudo chown -R ${USER}:developer ~/.openMSX
+    sudo chown -R ${USER}:developer ~/.openMSX && \
+    mkdir ~/.mame
 
 RUN echo 'alias code="code --no-sandbox"' >> ~/.bash_aliases && \
     echo 'export Z88DK_HOME=/opt/z88dk' >> ~/.bashrc && \
