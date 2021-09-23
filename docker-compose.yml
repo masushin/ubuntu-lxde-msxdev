@@ -12,5 +12,5 @@ services:
         source: ~/.config/pulse
         target: /home/msx/.config/pulse
       - type: bind
-        source: /Users/shinsuke/work/msx
+        source: ~/work/msx
         target: /home/msx/devmsx
