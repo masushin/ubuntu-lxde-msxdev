@@ -56,6 +56,8 @@ RUN curl -L https://go.microsoft.com/fwlink/?LinkID=760868 -o vscode.deb && \
 # z88dk
 RUN git clone --recursive https://github.com/z88dk/z88dk.git && \
     cd z88dk && \
+    export BUILD_SDCC=1 && \
+    export BUILD_SDCC_HTTP=1 && \
     ./build.sh
 
 # openMSX
