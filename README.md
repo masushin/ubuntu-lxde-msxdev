@@ -47,8 +47,9 @@ https://maple4estry.netlify.app/mame-msx-cbios/
 
 http://multipaint.kameli.net/
 
+---
 
-# Preparing steps to boot MSXDEV docker environment on Mac
+# Preparing steps on Mac
 
 ## Install and run pulseaudio
 
@@ -77,7 +78,7 @@ Other VNC clients may be used.
 ## Edit docker-compose.yml
 
 Change the following parts according to your environment.
-This is for mounting the working directory, so remove it if you don't need it.
+This is for mounting the working directory, remove it if you don't need it.
 
 ```
       - type: bind
@@ -90,6 +91,8 @@ This is for mounting the working directory, so remove it if you don't need it.
 ```
 $ docker-compose build
 ```
+
+---
 
 # docker run
 
