@@ -1,6 +1,6 @@
 # ubuntu-lxde-msxdev
 
-ubuntu20.04ベースのMSX開発環境です。以下のものが含まれています。
+docker による ubuntu20.04ベースのMSX開発環境です。以下のものが含まれています。
 
 * lxde + 日本語入力 fcitx
 * Visual Source Code
