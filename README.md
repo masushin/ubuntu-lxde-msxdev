@@ -39,3 +39,25 @@ pulseaudio
 $ pulseaudio --load=module-native-protocol-tcp --exit-idle-time=-1 --daemon
 ```
 
+## z88dk (z80向け開発ツール)
+## openMSX / openMSX debugger
+## MAME + c-bios ドライバ
+## nMSXtiles (MSX向けパターンエディタ)
+
+このあたりは，
+https://maple4estry.netlify.app/z88dk-msx/
+https://maple4estry.netlify.app/mame-msx-cbios/
+を参考にさせて頂きました．基本的に上記で示されている手順に従っています．
+
+
+* multipaint (レトロPCフォーマット対応のドローツール)
+http://multipaint.kameli.net/
+ドローツール．
+MODEで ```MSX１ MODE ２``` を選択すると，MSXのScreen2の色制限を考慮した状態になります．
+sc2形式で保存すると，MSXのVRAMにそのまま転送できる形式で保存できるので，例えばそのままVRAMに
+VPOKEすると表示できる．
+
+# 起動方法
+
+
+
