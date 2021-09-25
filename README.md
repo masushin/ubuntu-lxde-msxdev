@@ -36,7 +36,7 @@ $ sudo code --user-data-dir="/root" --no-sandbox
 ## MAME + c-bios driver
 ## nMSXtiles
 
-These have been implemented with reference to the following.
+These have been installed with reference to the following.
 
 https://maple4estry.netlify.app/z88dk-msx/
 
