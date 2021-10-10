@@ -60,27 +60,36 @@ RUN git clone --recursive https://github.com/z88dk/z88dk.git && \
     export BUILD_SDCC_HTTP=1 && \
     ./build.sh
 
-# openMSX
-RUN git clone https://github.com/openMSX/openMSX.git && \
-    cd openMSX && \
-    ./configure && \
-    make -j"$(nproc)" OPENMSX_TARGET_CPU=x86_64 OPENMSX_TARGET_OS=linux OPENMSX_FLAVOUR=opt staticbindist
-
-# openMSX debugger
-RUN git clone https://github.com/openMSX/debugger
-COPY etc/0001-add-z88dk-symbol-read-hack.patch /opt/debugger
-RUN cd debugger && \
-    patch -p1 < 0001-add-z88dk-symbol-read-hack.patch && \
-    make -j"$(nproc)"
-
 # MAME
 RUN git clone https://github.com/mamedev/mame.git
 COPY etc/cbios.patch /opt/mame
 RUN cd mame && \
     git checkout ec9ba6f && \
     patch -p1 < ./cbios.patch && \
-    make -j"$(nproc)" SUBTARGET=cbios SOURCES=src/mame/drivers/msx.cpp && \
-    mkdir roms/cbios && cp /opt/openMSX/derived/x86_64-linux-opt-3rd/bindist/install/share/machines/*.rom /opt/mame/roms/cbios
+    make -j2 SUBTARGET=cbios SOURCES=src/mame/drivers/msx.cpp
+    # mkdir roms/cbios && cp /opt/openMSX/derived/x86_64-linux-opt-3rd/bindist/install/share/machines/*.rom /opt/mame/roms/cbios
+
+# openMSX
+# RUN git clone https://github.com/openMSX/openMSX.git && \
+#     cd openMSX && \
+#     ./configure && \
+#     make -j"$(nproc)" OPENMSX_TARGET_CPU=x86_64 OPENMSX_TARGET_OS=linux OPENMSX_FLAVOUR=opt staticbindist
+
+# test
+RUN sudo apt update && sudo apt install -y openmsx openmsx-catapult \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*    
+
+# # openMSX debugger
+RUN git clone https://github.com/openMSX/debugger && \
+    cd debugger && git checkout 4806769
+COPY etc/0001-add-z88dk-symbol-read-hack_qt-fix.patch /opt/debugger
+RUN cd debugger && \
+    patch -p1 < 0001-add-z88dk-symbol-read-hack_qt-fix.patch && \
+    make -j"$(nproc)"
+
+
+
 
 # nMSXtiles
 RUN git clone https://github.com/pipagerardo/nMSXtiles.git && \
@@ -118,26 +127,28 @@ COPY start.sh /tmp/
 RUN chmod +x /tmp/start.sh
 
 COPY etc/multipaint.desktop /usr/share/applications
-COPY etc/openmsx.desktop /usr/share/applications
-COPY etc/openmsx-debugger.desktop /usr/share/applications
+# COPY etc/openmsx.desktop /usr/share/applications
+# COPY etc/openmsx-debugger.desktop /usr/share/applications
 COPY etc/code.desktop /usr/share/applications
 COPY etc/nMSXtiles.desktop /usr/share/applications
 
 USER ${USER}
 WORKDIR /home/${USER}
 ADD --chown=${USER}:developer config/ /home/${USER}/
-RUN cp -Rfp /opt/openMSX/derived/x86_64-linux-opt-3rd/bindist/install/share/ ~/.openMSX && \
-    cd ~/.openMSX && patch -p1 < ./openmsx-defaultmachine-setting.patch
+# RUN cp -Rfp /opt/openMSX/derived/x86_64-linux-opt-3rd/bindist/install/share/ ~/.openMSX && \
+#     cd ~/.openMSX && patch -p1 < ./openmsx-defaultmachine-setting.patch
 
 RUN echo 'alias code="code --no-sandbox"' >> ~/.bash_aliases && \
     echo 'export Z88DK_HOME=/opt/z88dk' >> ~/.bashrc && \
     echo 'export ZCCCFG=${Z88DK_HOME}/lib/config' >> ~/.bashrc && \
     echo 'export PATH=${Z88DK_HOME}/bin:${PATH}' >> ~/.bashrc && \
-    echo 'export PATH=/opt/openMSX/derived/x86_64-linux-opt-3rd/bindist/install/bin:${PATH}' >> ~/.bashrc && \
-    echo 'export PATH=/opt/debugger/derived/bin:${PATH}' >> ~/.bashrc && \
     echo 'export PATH=/opt/mame:${PATH}' >> ~/.bashrc && \
+    echo 'export PATH=/opt/debugger/derived/bin:${PATH}' >> ~/.bashrc && \
     echo 'export PATH=/opt/nMSXtiles/build:${PATH}' >> ~/.bashrc && \
     echo 'export PATH=/opt/multipaint/application.linux64:${PATH}' >> ~/.bashrc
+
+#    echo 'export PATH=/opt/openMSX/derived/x86_64-linux-opt-3rd/bindist/install/bin:${PATH}' >> ~/.bashrc && \
+
 
 # Command
 CMD ["/tmp/start.sh"]

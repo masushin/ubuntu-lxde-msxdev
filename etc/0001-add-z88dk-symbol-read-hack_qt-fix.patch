@@ -42,7 +42,7 @@ index c037c0c..1dae827 100644
  			read = symTable.readFile(n, SymbolTable::LINKMAP_FILE);
  		} else if (f.startsWith("pasmo")) {
 diff --git a/src/SymbolTable.cpp b/src/SymbolTable.cpp
-index 2b7cf16..bcf8811 100644
+index cec7b66..2241e73 100644
 --- a/src/SymbolTable.cpp
 +++ b/src/SymbolTable.cpp
 @@ -184,7 +184,9 @@ bool SymbolTable::readFile(const QString& filename, FileType type)
@@ -65,6 +65,15 @@ index 2b7cf16..bcf8811 100644
  	case LINKMAP_FILE:
  		return readLinkMapFile(filename);
  	case PASMO_FILE:
+@@ -281,7 +285,7 @@ bool SymbolTable::readSymbolFile(
+ 	QTextStream in(&file);
+ 	while (!in.atEnd()) {
+ 		QString line = in.readLine();
+-		QStringList l = line.split(equ, Qt::KeepEmptyParts, Qt::CaseInsensitive);
++		QStringList l = line.split(equ, QString::SplitBehavior::SkipEmptyParts, Qt::CaseInsensitive);
+ 		if (l.size() != 2) continue;
+ 		int value;
+ 		if (!parseValue(l.at(1), value)) continue;
 @@ -392,6 +396,32 @@ bool SymbolTable::readHTCFile(const QString& filename)
  	return true;
  }
